@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool hasAPathFrom(int start,const string s, string t, bool alreadyWentToLeft) {
+bool hasAPathFrom(int start, const string s, string t, bool alreadyWentToLeft) {
     if (start >= s.size()) {
         return false;
     }
