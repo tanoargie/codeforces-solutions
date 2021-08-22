@@ -20,7 +20,6 @@ int getBobScore(const vector<vector<int>> &matrix) {
   for (int i = 1; i < numberOfColumns; ++i) {
     lowerRow += matrix[1][i - 1];
     upperRow -= matrix[0][i];
-    /* cout << lowerRow << " " << upperRow << endl; */
     maxBetweenRows = max(lowerRow, upperRow);
     if (maxBetweenRows < res) {
       res = maxBetweenRows;
@@ -49,13 +48,6 @@ int main() {
     }
     results.push_back(getBobScore(matrix));
   }
-
-  /* for (int i = 0; i < matrix.size(); ++i) { */
-  /*   for (int j = 0; j < (matrix[i]).size(); ++j) { */
-  /*     cout << matrix[i][j] << " "; */
-  /*   } */
-  /*   cout << endl; */
-  /* } */
 
   for (int i = 0; i < results.size(); ++i) {
     cout << results[i] << endl;
