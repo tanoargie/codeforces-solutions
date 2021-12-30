@@ -5,26 +5,26 @@ using namespace std;
 
 int main() {
   int n;
-  vector<int> res;
+  vector<long long> res;
   cin >> n;
-  for (int i = 0; i < n; i++) {
-    int w, h;
+  for (long long i = 0; i < n; i++) {
+    long long w, h;
     cin >> w >> h;
-    int maxArea = 0;
+    long long maxArea = 0;
     for (int j = 0; j < 4; j++) {
-      int numberOfPoints;
-      int numberMin, numberMax;
-      cin >> numberOfPoints;
+      long long numberOfLong;
+      long long numberMin, numberMax;
+      cin >> numberOfLong;
       cin >> numberMin;
-      for (int p = 1; p < numberOfPoints; p++) {
+      for (long long p = 1; p < numberOfLong; p++) {
         cin >> numberMax;
       }
       if (j < 2) {
-        int area = h * (numberMax - numberMin);
+        long long area = h * (numberMax - numberMin);
         if (area > maxArea)
           maxArea = area;
       } else {
-        int area = w * (numberMax - numberMin);
+        long long area = w * (numberMax - numberMin);
         if (area > maxArea)
           maxArea = area;
       }
