@@ -37,13 +37,12 @@ vector<int> getDistanceBetweenRT(int n, int m) {
 }
 
 int main() {
-  int numberOfTests, n, m;
-  cin >> numberOfTests;
+  int t, n, m;
+  cin >> t;
   vector<vector<int>> resOfRes;
-  for (int i = 0; i < numberOfTests; ++i) {
+  for (int i = 0; i < t; ++i) {
     cin >> n >> m;
-    vector<int> res = getDistanceBetweenRT(n, m);
-    resOfRes.push_back(res);
+    resOfRes.push_back(getDistanceBetweenRT(n, m));
   }
   for (int j = 0; j < resOfRes.size(); j++) {
     for (int i = 0; i < resOfRes[j].size(); i++) {
