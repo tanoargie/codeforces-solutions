@@ -16,13 +16,13 @@ CONCLUSIÓN:
 => si un vértice tiene por lo menos 3 aristas no hay solución
 */
 void dfs(map<int, vector<int>> &adjacency, int vertex, vector<bool> &discovered,
-         vector<vector<int>> &weights, int last = 3) {
+         map<pair<int, int>, int> &weights, int last = 3) {
   discovered[vertex] = true;
   for (int i = 0; i < adjacency[vertex].size(); i++) {
     int adjacent = adjacency[vertex][i];
     if (!discovered[adjacent]) {
-      weights[vertex][adjacent] = last;
-      weights[adjacent][vertex] = last;
+      weights[make_pair(vertex, adjacent)] = last;
+      weights[make_pair(adjacent, vertex)] = last;
       if (last == 2) {
         dfs(adjacency, adjacent, discovered, weights, 3);
       } else {
@@ -59,11 +59,11 @@ int main() {
       }
     }
     if (possible) {
-      vector<vector<int>> weights(n + 1, vector<int>(n + 1, 0));
+      map<pair<int, int>, int> weights;
       vector<int> res;
       dfs(adjacency, leaf, discovered, weights);
       for (int p = 0; p < order.size(); ++p) {
-        res.push_back(weights[order[p].first][order[p].second]);
+        res.push_back(weights[order[p]]);
       }
       resRes.push_back(res);
     } else {
