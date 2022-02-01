@@ -9,6 +9,7 @@ using namespace std;
 supongamos que hay 3 aristas x, y, z desde un mismo vértice
 => x, y, z primos. También x+y primo, z+y primo y x+z primo
 => si x impar => y par => z impar
+=> pero entonces x es impar y z es impar
 pero entonces x+z no es primo.
 => así con todas las combinaciones.
 
