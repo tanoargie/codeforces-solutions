@@ -56,8 +56,8 @@ int main() {
     cin >> number;
     int minTerms = ones(number);
     // cout << "ones: " << min << endl;
-    for (int j = 0; factorialSums[j].first < number && j < factorialSums.size();
-         j++) {
+    for (int j = 0;
+         factorialSums[j].first <= number && j < factorialSums.size(); j++) {
       int currentTerms =
           ones(number - factorialSums[j].first) + factorialSums[j].second;
       if (currentTerms < minTerms) {
