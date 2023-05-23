@@ -1,89 +1,78 @@
-#include <deque>
+#include <algorithm>
 #include <iostream>
+#include <math.h>
 #include <string>
-#include <utility>
 #include <vector>
 
 using namespace std;
 
+bool compare_function(pair<long long, long long> p1,
+                      pair<long long, long long> p2) {
+  return p1.first < p2.first;
+}
+
 int main() {
-  int numberOfTests;
+  long long numberOfTests;
   cin >> numberOfTests;
   vector<string> results;
-  for (int i = 0; i < numberOfTests; i++) {
-    int numberOfMonsters;
-    int genosAttack;
+  for (long long i = 0; i < numberOfTests; i++) {
+    long long numberOfMonsters;
+    long long genosAttack;
+    long long maxHealth = 0;
     cin >> numberOfMonsters;
     cin >> genosAttack;
 
-    deque<pair<int, int> > orderedMonsters;
-    int health;
-    vector<int> healths;
-    for (int j = 0; j < numberOfMonsters; j++) {
+    long long health;
+    vector<long long> healths;
+    for (long long j = 0; j < numberOfMonsters; j++) {
       cin >> health;
+      if (health > maxHealth) {
+        maxHealth = health;
+      }
       healths.push_back(health);
     }
-    // for (int j = 0; j < numberOfMonsters; j++) {
-    //   cout << healths[j] << " ";
-    // }
 
-    int power;
-    vector<int> powers;
-    for (int j = 0; j < numberOfMonsters; j++) {
+    long long power;
+    vector<long long> powers;
+    for (long long j = 0; j < numberOfMonsters; j++) {
       cin >> power;
       powers.push_back(power);
     }
-    // cout << powers.size() << endl;
-    // for (int j = 0; j < numberOfMonsters; j++) {
-    //   cout << powers[j] << " ";
-    // }
 
-    // cout << "size1" << endl;
-    for (int j = 0; j < numberOfMonsters; j++) {
-      pair<int, int> powerAndHealth = make_pair(powers[j], healths[j]);
-      if (orderedMonsters.empty()) {
-        orderedMonsters.emplace_back(powerAndHealth);
-      } else {
-        pair<int, int> weakestMonster = orderedMonsters.front();
-        if (weakestMonster.first > powerAndHealth.first) {
-          orderedMonsters.emplace_front(powerAndHealth);
-        } else if (weakestMonster.first == powerAndHealth.first &&
-                   weakestMonster.second < powerAndHealth.second) {
-          orderedMonsters.emplace_front(powerAndHealth);
-        } else {
-          orderedMonsters.emplace_back(powerAndHealth);
-        }
-      }
+    vector<pair<long long, long long> > orderedPowerHealth;
+    for (long long j = 0; j < numberOfMonsters; j++) {
+      orderedPowerHealth.push_back(make_pair(powers[j], healths[j]));
     }
 
-    auto monster = orderedMonsters.front();
-    while (!orderedMonsters.empty() || genosAttack > 0) {
-      for (int j = 0; j < orderedMonsters.size(); j++) {
-        int monsterHealth = orderedMonsters[j].second;
-        orderedMonsters[j].second = monsterHealth - genosAttack;
+    sort(orderedPowerHealth.begin(), orderedPowerHealth.end(),
+         compare_function);
+
+    long long itHealth = 0;
+    long long genosAccumAttack = 0;
+    while (itHealth < orderedPowerHealth.size() && genosAttack > 0) {
+      genosAccumAttack += genosAttack;
+      if (genosAccumAttack > maxHealth) {
+        break;
       }
-      // for (auto j = orderedMonsters.begin(); j != orderedMonsters.end(); ++j)
-      // {
-      //   cout << j->second << " ";
-      // }
-      while (monster.second <= 0) {
-        orderedMonsters.pop_front();
-        if (!orderedMonsters.empty()) {
-          monster = orderedMonsters.front();
-        }
+      while (itHealth < orderedPowerHealth.size() &&
+             genosAccumAttack >= orderedPowerHealth.at(itHealth).second) {
+        itHealth++;
       }
-      cout << "size1" << endl;
-      pair<int, int> weakestMonster = orderedMonsters.front();
-      genosAttack -= weakestMonster.first;
+      if (orderedPowerHealth.size() == itHealth) {
+        break;
+      }
+      long long weakestPower = orderedPowerHealth.at(itHealth).first;
+      genosAttack -= weakestPower;
     }
-    if (orderedMonsters.empty()) {
-      results.push_back("NO");
-    } else {
+
+    if (genosAccumAttack > maxHealth || itHealth == orderedPowerHealth.size()) {
       results.push_back("YES");
+    } else {
+      results.push_back("NO");
     }
   }
 
-  for (int i = 0; i < results.size(); i++) {
+  for (long long i = 0; i < results.size(); i++) {
     cout << results[i] << endl;
   }
 
